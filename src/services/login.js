@@ -1,15 +1,15 @@
 import axios from "axios";
-const baseUrl = "/api/blogs";
+const baseUrl = "/api/login";
 
-let token = null;
+const token = null;
 
 const setToken = (newToken) => {
   token = `Bearer ${newToken}`;
 };
 
-const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
+const login = async (credentials) => {
+  const response = await axios.post(baseUrl, credentials);
+  return response.data;
 };
 
 const create = async (newObject) => {
@@ -21,4 +21,4 @@ const create = async (newObject) => {
   return response.data;
 };
 
-export default { getAll, create, setToken };
+export default { login, create, setToken };
