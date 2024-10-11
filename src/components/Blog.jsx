@@ -40,9 +40,9 @@ const Blog = ({ blog }) => {
     }
   };
 
-  const remove  =() => {
-    blogService.deleteBlog(blogObject)
-  }
+  const remove = () => {
+    blogService.deleteBlog(blogObject);
+  };
 
   return (
     <div style={blogStyle}>
@@ -56,7 +56,9 @@ const Blog = ({ blog }) => {
           Likes: {blogObject.likes} <button onClick={likePost}>like</button>
         </p>
         <p>{users()}</p>
-        <button id="remove" onClick={remove}>remove</button>
+        <button id="remove" onClick={remove}>
+          remove
+        </button>
       </div>
     </div>
   );
