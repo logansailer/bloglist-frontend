@@ -1,8 +1,8 @@
-import blogService from "../services/blogs"
+import blogService from "../services/blogs";
 import { useState } from "react";
 
 const Blog = ({ blog }) => {
-  const blogStyle = {
+  let blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
     border: "solid",
@@ -10,6 +10,7 @@ const Blog = ({ blog }) => {
     marginBottom: 5,
   };
 
+  const [blogObject, setBlogObject] = useState(blog);
   const [viewer, setViewer] = useState("view");
   const [visible, setVisible] = useState(false);
 
@@ -24,15 +25,38 @@ const Blog = ({ blog }) => {
     }
   };
 
-  const likePost = (blog) => {};
+  const likePost = () => {
+    const updatedBlog = {
+      ...blog,
+      likes: blog.likes + 1,
+    };
+    blogService.addLike(updatedBlog);
+    setBlogObject(updatedBlog);
+  };
+
+  const users = () => {
+    if (blogObject.user) {
+      return blogObject.user.name;
+    }
+  };
+
+  const remove  =() => {
+    blogService.deleteBlog(blogObject)
+  }
 
   return (
     <div style={blogStyle}>
-      {blog.title} {blog.author} <button onClick={expandInfo}>{viewer}</button>
+      <p>
+        {blogObject.title} by {blogObject.author}{" "}
+        <button onClick={expandInfo}>{viewer}</button>
+      </p>
       <div style={showWhenVisible}>
-        {blog.url}
-        <br></br>
-        Likes: {blog.likes} <button onClick={likePost(blog)}>like</button>
+        <p>{blogObject.url}</p>
+        <p>
+          Likes: {blogObject.likes} <button onClick={likePost}>like</button>
+        </p>
+        <p>{users()}</p>
+        <button id="remove" onClick={remove}>remove</button>
       </div>
     </div>
   );
