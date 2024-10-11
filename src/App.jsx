@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Blog from "./components/Blog";
 import Notification from "./components/Notification";
 import loginService from "./services/login";
 import blogService from "./services/blogs";
+import Togglable from "./components/Togglable";
+import BlogForm from "./components/blogForm";
 
 const App = () => {
   const [user, setUser] = useState("");
   const [blogs, setBlogs] = useState([]);
-  const [newBlogTitle, setNewBlogTitle] = useState("");
-  const [newBlogAuthor, setNewBlogAuthor] = useState("");
-  const [newBlogUrl, setNewBlogUrl] = useState("");
-  const [newBlogLikes, setNewBlogLikes] = useState("");
   const [notifMessage, setNotifMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const blogFormRef = useRef();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -74,39 +74,13 @@ const App = () => {
       </form>
     </div>
   );
-
-  const handleBlogTitleChange = (event) => {
-    setNewBlogTitle(event.target.value);
-  };
-
-  const handleBlogAuthorChange = (event) => {
-    setNewBlogAuthor(event.target.value);
-  };
-  const handleBlogUrlChange = (event) => {
-    setNewBlogUrl(event.target.value);
-  };
-  const handleBlogLikeChange = (event) => {
-    setNewBlogLikes(event.target.value);
-  };
-
-  const addBlog = (event) => {
-    event.preventDefault();
-    const blogObject = {
-      title: newBlogTitle,
-      author: newBlogAuthor,
-      url: newBlogUrl,
-      likes: newBlogLikes,
-    };
-
+  const addBlog = (blogObject) => {
+    blogFormRef.current.toggleVisibility();
     blogService.create(blogObject).then((returnedBlog) => {
       setBlogs(blogs.concat(returnedBlog));
       setNotifMessage(
         `a new blog ${newBlogTitle} by ${newBlogAuthor} has been added`
       );
-      setNewBlogTitle("");
-      setNewBlogAuthor("");
-      setNewBlogUrl("");
-      setNewBlogLikes("");
     });
   };
 
@@ -121,25 +95,9 @@ const App = () => {
       <h4>{user.name} logged in</h4>
       <button onClick={logout}>Logout</button>
       <h3>Add a blog:</h3>
-      <form onSubmit={addBlog}>
-        <div>
-          <label>Blog Title:</label>
-          <input value={newBlogTitle} onChange={handleBlogTitleChange} />
-        </div>
-        <div>
-          <label>Blog Author:</label>
-          <input value={newBlogAuthor} onChange={handleBlogAuthorChange} />
-        </div>
-        <div>
-          <label>Blog Url:</label>
-          <input value={newBlogUrl} onChange={handleBlogUrlChange} />
-        </div>
-        <div>
-          <label>Blog Likes:</label>
-          <input value={newBlogLikes} onChange={handleBlogLikeChange} />
-        </div>
-        <button type="submit">save</button>
-      </form>
+      <Togglable buttonLabel="add blog" ref={blogFormRef}>
+        <BlogForm createBlog={addBlog} />
+      </Togglable>
       <br></br>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />

@@ -21,4 +21,8 @@ const create = async (newObject) => {
   return response.data;
 };
 
+const addLike = async (blog) => {
+  
+}
+
 export default { getAll, create, setToken };
