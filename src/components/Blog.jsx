@@ -45,12 +45,12 @@ const Blog = ({ blog }) => {
   };
 
   return (
-    <div style={blogStyle}>
-      <p>
+    <div style={blogStyle} className="blog">
+      <p className="generalInfo">
         {blogObject.title} by {blogObject.author}{" "}
         <button onClick={expandInfo}>{viewer}</button>
       </p>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className="extraInfo">
         <p>{blogObject.url}</p>
         <p>
           Likes: {blogObject.likes} <button onClick={likePost}>like</button>
