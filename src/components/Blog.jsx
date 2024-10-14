@@ -27,8 +27,8 @@ const Blog = ({ blog }) => {
 
   const likePost = () => {
     const updatedBlog = {
-      ...blog,
-      likes: blog.likes + 1,
+      ...blogObject,
+      likes: blogObject.likes + 1,
     };
     blogService.addLike(updatedBlog);
     setBlogObject(updatedBlog);

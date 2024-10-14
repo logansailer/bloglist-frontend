@@ -1,7 +1,7 @@
 import axios from "axios";
 const baseUrl = "/api/login";
 
-const token = null;
+let token = null;
 
 const setToken = (newToken) => {
   token = `Bearer ${newToken}`;
