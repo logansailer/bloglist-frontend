@@ -46,7 +46,7 @@ test("renders url and number of likes after view click", async () => {
 
 test("like button functions with 2 clicks", async () => {
   const blog = {
-    id: "5a422a851b54a676234d17f7",
+    id: "test",
     title: "React patterns",
     author: "Michael Chan",
     url: "https://reactpatterns.com/",
@@ -55,16 +55,13 @@ test("like button functions with 2 clicks", async () => {
 
   //initializes mock click and rendered component
   const mockHandler = vi.fn();
-  render(<Blog blog={blog} expandInfo={mockHandler} />);
+  render(<Blog blog={blog} likePost={mockHandler} />);
 
   //emulates screen click
   const user = userEvent.setup();
   const button = screen.getByText("like");
   await user.click(button);
+  await user.click(button);
 
-  console.log(mockHandler.mock.calls);
-
- expect(mockHandler.mock.calls).toHaveLength(1);
+  expect(mockHandler.mock.calls).toHaveLength(2);
 });
-
-

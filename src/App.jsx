@@ -4,7 +4,7 @@ import Notification from "./components/Notification";
 import loginService from "./services/login";
 import blogService from "./services/blogs";
 import Togglable from "./components/Togglable";
-import BlogForm from "./components/blogForm";
+import BlogForm from "./components/BlogForm";
 
 const App = () => {
   const [user, setUser] = useState("");
