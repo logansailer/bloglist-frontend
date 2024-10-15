@@ -36,11 +36,11 @@ const Blog = ({ blog }) => {
 
   const users = () => {
     if (blogObject.user) {
-      return blogObject.user.name;
+      return blogObject.user.username;
     }
   };
 
-  const remove = () => {
+  const removeBlog = () => {
     blogService.deleteBlog(blogObject);
     location.reload();
   };
@@ -59,8 +59,8 @@ const Blog = ({ blog }) => {
             like
           </button>
         </p>
-        <p>{users()}</p>
-        <button id="remove" onClick={remove}>
+        <p>{users}</p>
+        <button id="remove" onClick={removeBlog}>
           remove
         </button>
       </div>
