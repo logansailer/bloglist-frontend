@@ -42,6 +42,7 @@ const Blog = ({ blog }) => {
 
   const remove = () => {
     blogService.deleteBlog(blogObject);
+    location.reload();
   };
 
   return (
@@ -53,7 +54,10 @@ const Blog = ({ blog }) => {
       <div style={showWhenVisible} className="extraInfo">
         <p>{blogObject.url}</p>
         <p>
-          Likes: {blogObject.likes} <button onClick={likePost} id="like">like</button>
+          Likes: {blogObject.likes}{" "}
+          <button onClick={likePost} id="like">
+            like
+          </button>
         </p>
         <p>{users()}</p>
         <button id="remove" onClick={remove}>
