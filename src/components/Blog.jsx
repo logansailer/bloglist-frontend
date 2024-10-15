@@ -46,7 +46,7 @@ const Blog = ({ blog }) => {
   };
 
   return (
-    <div style={blogStyle} className="blog">
+    <div data-testid="blogdiv" style={blogStyle} className="blog">
       <p className="generalInfo">
         {blogObject.title} by {blogObject.author}{" "}
         <button onClick={expandInfo}>{viewer}</button>
